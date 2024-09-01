@@ -135,6 +135,8 @@ LOGOUT_REDIRECT_URL = "/"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -176,5 +178,6 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 
 TELEGRAM_BOT_TOKEN = env.str("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = env.str("TELEGRAM_CHAT_ID")
+TELEGRAM_URL = env.str("TELEGRAM_URL")
 
 

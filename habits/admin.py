@@ -3,7 +3,8 @@ from .models import Habit
 
 
 class HabitAdmin(admin.ModelAdmin):
-    list_display = ('user', 'location', 'time', 'action', 'is_pleasant', 'linked_habit', 'frequency', 'reward', 'duration', 'is_public')
+    list_display = ('user', 'location', 'time', 'action', 'is_pleasant', 'linked_habit', 'frequency', 'reward',
+                    'duration', 'is_public', 'last_execution_date')
     list_filter = ('is_pleasant', 'is_public', 'frequency')
     search_fields = ('action', 'reward', 'location')
     ordering = ('-time',)

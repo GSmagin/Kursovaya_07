@@ -28,7 +28,7 @@ class HabitSerializer(serializers.ModelSerializer):
         reward = data.get('reward')
         is_pleasant = data.get('is_pleasant', False)
         duration = data.get('duration', 120)
-        frequency = data.get('frequency', 1)
+        frequency = data.get('frequency')
 
         if linked_habit and reward:
             raise serializers.ValidationError('Нельзя одновременно указывать связанную привычку и вознаграждение.')
@@ -42,7 +42,7 @@ class HabitSerializer(serializers.ModelSerializer):
         if duration > 120:
             raise serializers.ValidationError('Время на выполнение привычки не должно превышать 120 секунд.')
 
-        if frequency < 1:
-            raise serializers.ValidationError('Частота выполнения должна быть не менее 1 дня.')
+        if frequency < 1 or frequency > 7:
+            raise serializers.ValidationError({'frequency': 'Частота выполнения должна быть от 1 до 7 дней.'})
 
         return data

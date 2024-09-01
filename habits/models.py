@@ -6,6 +6,7 @@ from utils.const import NULLABLE
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 
 class Habit(models.Model):
@@ -21,6 +22,7 @@ class Habit(models.Model):
     reward = models.CharField(max_length=255, **NULLABLE, verbose_name=_('Вознаграждение'))
     duration = models.PositiveIntegerField(default=120,  verbose_name=_('Время на выполнение (seconds)'))  # Время в секундах
     is_public = models.BooleanField(default=False, verbose_name=_('Признак публичности'))
+    last_execution_date = models.DateField(**NULLABLE, verbose_name=_('Дата последнего выполнения'))
 
     def clean(self):
         # Проверка одновременного заполнения linked_habit и reward
@@ -40,8 +42,9 @@ class Habit(models.Model):
             raise ValidationError('Время на выполнение привычки не должно превышать 120 секунд.')
 
         # Проверка частоты выполнения
-        if self.frequency < 1:
-            raise ValidationError('Частота выполнения должна быть не менее 1 дня.')
+        if self.frequency < 1 or self.frequency > 7:
+            raise ValidationError('Частота выполнения должна быть от 1 до 7 дней.')
+
 
     def save(self, *args, **kwargs):
         self.full_clean()
