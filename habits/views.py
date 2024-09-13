@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Список привычек текущего пользователя с пагинацией
@@ -45,6 +46,10 @@ class HabitUpdateView(generics.RetrieveUpdateAPIView):
     def get_queryset(self):
         return Habit.objects.filter(user=self.request.user)
 
+        # if not self.request.user.is_authenticated:
+        #     return Habit.objects.none()  # Возвращаем пустой QuerySet для неавторизованных пользователей
+        # return Habit.objects.filter(user=self.request.user)
+
 
 # Удаление привычки
 class HabitDeleteView(generics.DestroyAPIView):
@@ -53,3 +58,4 @@ class HabitDeleteView(generics.DestroyAPIView):
 
     def get_queryset(self):
         return Habit.objects.filter(user=self.request.user)
+
