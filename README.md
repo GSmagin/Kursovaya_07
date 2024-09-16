@@ -9,7 +9,7 @@
 
 ### Документация по командам
 
-- http://localhost:800/redoc/
+- http://localhost:8000/redoc/
 - http://localhost:8000/swagger/
 
 ## Структура проекта
