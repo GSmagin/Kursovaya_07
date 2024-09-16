@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   web:
     build: .
@@ -20,13 +18,14 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - .env
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
 
   redis:
     image: redis:alpine
+    container_name: redis_alpine
+    ports:
+      - "6379:6379"
 
   celery:
     build: .
